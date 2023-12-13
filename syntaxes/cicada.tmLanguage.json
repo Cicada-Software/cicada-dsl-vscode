@@ -1,0 +1,70 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Cicada",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#builtins"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.cicada",
+					"match": "\\b(and|break|cache|continue|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.cicada",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.cicada",
+					"match": "\\\\."
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric.cicada",
+			"patterns": [
+				{
+					"name": "constant.numeric.hex.cicada",
+					"match": "[-+]?0[xX][0-9A-Fa-f_]+"
+				},
+				{
+					"name": "constant.numeric.octal.cicada",
+					"match": "[-+]?0[oO][0-7_]+"
+				},
+				{
+					"name": "constant.numeric.binary.cicada",
+					"match": "[-+]?0[bB][01_]+"
+				},
+				{
+					"name": "constant.numeric.decimal.cicada",
+					"match": "[-+]?([0-9_]+\\.)?[0-9_]+"
+				}
+			]
+		},
+		"builtins": {
+			"name": "support.function.cicada",
+			"patterns": [
+				{
+					"name": "support.function.builtin.cicada",
+					"match": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell|hashOf|print)\\b"
+				}
+			]
+		}
+	},
+	"scopeName": "source.cicada"
+}

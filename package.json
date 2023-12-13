@@ -1,0 +1,25 @@
+{
+  "name": "cicada-dsl",
+  "displayName": "Cicada DSL",
+  "description": "Language Support for the Cicada DSL",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "cicada",
+      "aliases": ["Cicada", "cicada"],
+      "extensions": [".ci"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "cicada",
+      "scopeName": "source.cicada",
+      "path": "./syntaxes/cicada.tmLanguage.json"
+    }]
+  }
+}
