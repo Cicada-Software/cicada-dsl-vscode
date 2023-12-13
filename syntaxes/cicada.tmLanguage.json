@@ -3,6 +3,12 @@
 	"name": "Cicada",
 	"patterns": [
 		{
+			"include": "#let"
+		},
+		{
+			"include": "#fn"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -13,16 +19,18 @@
 		},
 		{
 			"include": "#builtins"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#booleans"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [
-				{
-					"name": "keyword.control.cicada",
-					"match": "\\b(and|break|cache|continue|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
-				}
-			]
+			"name": "keyword.control.cicada",
+			"match": "\\b(and|break|cache|continue|fn|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
 		},
 		"strings": {
 			"name": "string.quoted.double.cicada",
@@ -57,13 +65,61 @@
 			]
 		},
 		"builtins": {
-			"name": "support.function.cicada",
-			"patterns": [
+			"name": "support.function.builtin.cicada",
+			"match": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell|hashOf|print)\\b"
+		},
+		"let": {
+			"name": "meta.stmts.let.cicada",
+			"match": "(let)\\s+(mut)?\\s*([A-Za-z0-9_]+)\\s+(=)",
+			"captures": {
+				"1": {"name": "keyword.control.cicada"},
+				"2": {"name": "keyword.control.cicada"},
+				"3": {"name": "variable.other.cicada"},
+				"4": {"name": "keyword.operator.cicada"}
+			}
+		},
+		"fn": {
+			 "name": "meta.stmts.fn.cicada",
+			 "patterns": [
 				{
-					"name": "support.function.builtin.cicada",
-					"match": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell|hashOf|print)\\b"
+					"name": "meta.stmts.fn.cicada",
+					"begin": "(fn)\\s+([A-Za-z0-9_]+)\\(",
+					"beginCaptures": {
+						"1": {"name": "storage.type.cicada"},
+						"2": {"name": "entity.name.function.cicada"}
+					},
+					"end": "\\)\\s*(->\\s*([A-Za-z0-9_]+))?\\s*:",
+					"endCaptures": {
+						"2": {"name": "support.type.cicada"}
+					},
+					"patterns": [
+						{"include": "#function-param"},
+						{"include": "#function-param-annotation"}
+					]
 				}
 			]
+		},
+		"function-param": {
+			"name": "meta.stmts.fn.param.cicada",
+			"match": "([A-Za-z0-9_]+)",
+			"captures": {
+				"1": {"name": "variable.other.cicada"}
+			}
+		},
+		"function-param-annotation": {
+			"name": "meta.stmts.fn.param-annotation.cicada",
+			"match": ":\\s*([A-Za-z0-9_]+)",
+			"captures": {
+				"1": {"name": "support.type.cicada"}
+			}
+		},
+		"booleans": {
+			"name": "constant.language.cicada",
+			"match": "\\b(true|false)\\b"
+		},
+		"types": {
+			"name": "support.type.cicada",
+			"match": "\\b(number|string|\\(\\)|bool)\\b"
 		}
 	},
 	"scopeName": "source.cicada"
