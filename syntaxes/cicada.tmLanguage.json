@@ -6,20 +6,33 @@
 		{"include": "#run-on"},
 		{"include": "#let"},
 		{"include": "#fn"},
+		{"include": "#fn-annotation"},
 		{"include": "#for"},
+		{"include": "#cache"},
 		{"include": "#keywords"},
 		{"include": "#strings"},
 		{"include": "#numbers"},
+		{"include": "#shell-func-call"},
 		{"include": "#builtins"},
 		{"include": "#globals"},
 		{"include": "#types"},
 		{"include": "#booleans"},
-		{"include": "#comment"}
+		{"include": "#comment"},
+		{"include": "#ident"}
 	],
 	"repository": {
 		"keywords": {
 			"name": "keyword.control.cicada",
 			"match": "\\b(and|break|cache|continue|fn|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
+		},
+		"expr": {
+			"patterns": [
+				{"include": "#numbers"},
+				{"include": "#strings"},
+				{"include": "#globals"},
+				{"include": "#booleans"},
+				{"include": "#ident"}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.cicada",
@@ -52,6 +65,26 @@
 					"match": "[-+]?([0-9_]+\\.)?[0-9_]+"
 				}
 			]
+		},
+		"shell-func-call": {
+			"name": "meta.expr.shell-func-call.cicada",
+			"begin": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell)\\s+",
+			"beginCaptures": {
+				"1": {"name": "support.function.builtin.cicada"}
+			},
+			"patterns": [
+				{"include": "#interpolated-arg"},
+				{"include": "#strings"}
+			],
+			"end": "$"
+		},
+		"interpolated-arg": {
+			"name": "meta.expr.interpolated-arg.cicada",
+			"begin": "\\(",
+			"patterns": [
+				{"include": "#expr"}
+			],
+			"end": "\\)"
 		},
 		"builtins": {
 			"name": "support.function.builtin.cicada",
@@ -110,6 +143,10 @@
 				}
 			]
 		},
+		"fn-annotation": {
+			"name": "entity.name.function.decorator.cicada",
+			"match": "@[A-Za-z0-9_]+"
+		},
 		"function-param": {
 			"name": "meta.stmts.fn.param.cicada",
 			"match": "([A-Za-z0-9_]+)",
@@ -135,7 +172,26 @@
 						"2": {"name": "variable.other.cicada"},
 						"3": {"name": "keyword.control.cicada"}
 					},
-					"end": ":"
+					"patterns": [
+						{"include": "#expr"}
+					],
+					"end": "(:|$)"
+				}
+			]
+		},
+		"cache": {
+			 "name": "meta.stmts.cache.cicada",
+			 "patterns": [
+				{
+					"name": "meta.stmts.cache.cicada",
+					"begin": "(cache)\\s+",
+					"beginCaptures": {
+						"1": {"name": "keyword.control.cicada"}
+					},
+					"end": "((using)|$)",
+					"endCaptures": {
+						"2": {"name": "keyword.control.cicada"}
+					}
 				}
 			]
 		},
@@ -150,6 +206,10 @@
 		"comment": {
 			"name": "comment.line.number-sign.cicada",
 			"match": "#.*$"
+		},
+		"ident": {
+			"name": "variable.other.cicada",
+			"match": "[A-Za-z0-9_]+"
 		}
 	},
 	"scopeName": "source.cicada"
