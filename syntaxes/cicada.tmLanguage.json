@@ -2,30 +2,19 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "Cicada",
 	"patterns": [
-		{
-			"include": "#let"
-		},
-		{
-			"include": "#fn"
-		},
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#numbers"
-		},
-		{
-			"include": "#builtins"
-		},
-		{
-			"include": "#types"
-		},
-		{
-			"include": "#booleans"
-		}
+		{"include": "#on"},
+		{"include": "#run-on"},
+		{"include": "#let"},
+		{"include": "#fn"},
+		{"include": "#for"},
+		{"include": "#keywords"},
+		{"include": "#strings"},
+		{"include": "#numbers"},
+		{"include": "#builtins"},
+		{"include": "#globals"},
+		{"include": "#types"},
+		{"include": "#booleans"},
+		{"include": "#comment"}
 	],
 	"repository": {
 		"keywords": {
@@ -68,11 +57,33 @@
 			"name": "support.function.builtin.cicada",
 			"match": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell|hashOf|print)\\b"
 		},
+		"globals": {
+			"name": "variable.language.cicada",
+			"match": "\\b(env|event|secret)\\b"
+		},
+		"on": {
+			"name": "meta.stmts.on.cicada",
+			"match": "(on)\\s+(git.push|issue.open|issue.close)\\s+((where)\\s+)",
+			"captures": {
+				"1": {"name": "keyword.control.cicada"},
+				"2": {"name": "constant.language.cicada"},
+				"4": {"name": "keyword.control.cicada"}
+			}
+		},
+		"run-on": {
+			"name": "meta.stmts.run-on.cicada",
+			"match": "(run_on)\\s+((self_hosted)|((image)\\s+(\\S+)))",
+			"captures": {
+				"1": {"name": "keyword.control.cicada"},
+				"3": {"name": "constant.language.cicada"},
+				"5": {"name": "constant.language.cicada"}
+			}
+		},
 		"let": {
 			"name": "meta.stmts.let.cicada",
 			"match": "(let)\\s+(mut)?\\s*([A-Za-z0-9_]+)\\s+(=)",
 			"captures": {
-				"1": {"name": "keyword.control.cicada"},
+				"1": {"name": "storage.type.cicada"},
 				"2": {"name": "keyword.control.cicada"},
 				"3": {"name": "variable.other.cicada"},
 				"4": {"name": "keyword.operator.cicada"}
@@ -113,6 +124,21 @@
 				"1": {"name": "support.type.cicada"}
 			}
 		},
+		"for": {
+			 "name": "meta.stmts.for.cicada",
+			 "patterns": [
+				{
+					"name": "meta.stmts.for.cicada",
+					"begin": "(for)\\s+([A-Za-z0-9_]+)\\s+(in)",
+					"beginCaptures": {
+						"1": {"name": "keyword.control.cicada"},
+						"2": {"name": "variable.other.cicada"},
+						"3": {"name": "keyword.control.cicada"}
+					},
+					"end": ":"
+				}
+			]
+		},
 		"booleans": {
 			"name": "constant.language.cicada",
 			"match": "\\b(true|false)\\b"
@@ -120,6 +146,10 @@
 		"types": {
 			"name": "support.type.cicada",
 			"match": "\\b(number|string|\\(\\)|bool)\\b"
+		},
+		"comment": {
+			"name": "comment.line.number-sign.cicada",
+			"match": "#.*$"
 		}
 	},
 	"scopeName": "source.cicada"
