@@ -23,7 +23,7 @@
 	"repository": {
 		"keywords": {
 			"name": "keyword.control.cicada",
-			"match": "\\b(and|break|cache|continue|fn|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
+			"match": "\\b(and|break|cache|continue|elif|else|fn|for|if|in|is|let|mod|mut|not|on|or|run_on|title|using|where|while|xor)\\b"
 		},
 		"expr": {
 			"patterns": [
@@ -91,7 +91,7 @@
 			"match": "\\b(cd|cp|echo|git|ls|make|mkdir|rm|shell|hashOf|print)\\b"
 		},
 		"globals": {
-			"name": "variable.language.cicada",
+			"name": "variable.other.cicada",
 			"match": "\\b(env|event|secret)\\b"
 		},
 		"on": {
